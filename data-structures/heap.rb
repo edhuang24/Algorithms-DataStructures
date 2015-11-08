@@ -60,7 +60,7 @@ class MinHeap
 
   private
   def swap!(idx1, idx2)
-    idx1, idx2 = idx2, idx1
+    @store[idx1], @store[idx2] = @store[idx2], @store[idx1]
   end
 end
 
@@ -126,7 +126,7 @@ class MaxHeap
 
   private
   def swap!(idx1, idx2)
-    idx1, idx2 = idx2, idx1
+    @store[idx1], @store[idx2] = @store[idx2], @store[idx1]
   end
 end
 
@@ -217,6 +217,6 @@ class Heap
 
   private
   def swap!(idx1, idx2)
-    idx1, idx2 = idx2, idx1
+    @store[idx1], @store[idx2] = @store[idx2], @store[idx1]
   end
 end
