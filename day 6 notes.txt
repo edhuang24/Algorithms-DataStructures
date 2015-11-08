@@ -1,0 +1,16 @@
+bitwise operators
+
+AND
+
+1011
+0101
+____
+0001
+
+XOR
+one or the other, not both or neither
+
+1011
+0110
+____
+1101

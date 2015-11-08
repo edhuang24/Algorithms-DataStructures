@@ -1,0 +1,11 @@
+what is a string?
+
+-at some point, it will be beneficial to understand how it works in C code.
+
+class String
+
+	def initialize(string)
+		@length = 0
+	end
+
+end

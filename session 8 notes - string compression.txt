@@ -1,0 +1,45 @@
+String Compression: Huffman Coding
+
+Claude Shannon => Information Theory
+
+"helloall"
+
+h -> 111
+e -> 101
+l -> 001
+o -> 110
+a -> 010
+
+make l -> 0?
+
+A: doesn't work due to ambiguity.
+
+*****************************************************
+
+Huffman Coding (Variable-length encoding algorithm):
+
+"hellodolly"
+
+(counts of letters below)
+
+h -> 1
+e -> 1
+l -> 4
+o -> 2
+d -> 1
+y -> 1
+
+rule: combine the smallest 2 nodes. this ensures that there are no prefixes. a prefix of a leaf cannot be another leaf.
+
+"hellodolly" -> "hedyol" - (111124) -> "he dy ol" - (226) -> "hedy ol" - (46) -> "helody" - (10)
+
+h -> 000
+e -> 001
+l -> 11
+o -> 10
+d -> 010
+y -> 011
+
+(to get this final encoding, it helps to draw out each step)
+
+it is impossible to compress a truly random data. there is a lot of entropy.

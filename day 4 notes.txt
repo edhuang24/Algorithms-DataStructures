@@ -1,0 +1,2 @@
+ADT = Abstract Data Type
+
