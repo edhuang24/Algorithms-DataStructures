@@ -133,6 +133,7 @@ class BSTNode
     current_node
   end
 
+  # this method outputs an array representation of the tree to make it easier to visualize it
   def all
     result = []
 
@@ -164,11 +165,6 @@ class BSTNode
     end
 
     result
-  end
-
-  private
-  def handle_delete(node)
-
   end
 end
 
