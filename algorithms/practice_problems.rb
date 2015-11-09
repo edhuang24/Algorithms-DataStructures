@@ -717,9 +717,9 @@ def sort2(arr, max)
   counts.each_with_index do |el, idx|
     el.times { arr << idx }
   end
-  results
+  result
 end
 
 def sort3(strings, length)
-  
+
 end

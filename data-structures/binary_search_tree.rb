@@ -27,7 +27,7 @@ class BSTNode
     until current_node.val == val
       if current_node.val < val
         current_node = current_node.right
-      else current_node.val > val
+      else
         current_node = current_node.left
       end
     end
