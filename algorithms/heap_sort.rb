@@ -94,25 +94,49 @@ class Array
     end
   end
 
+  # def unheapify!
+  #   swap_count = 0
+  #   current_idx = 0
+  #   while swap_count < self.size
+  #     heap_len = self.length - 1 - swap_count
+  #     self.swap!(0, heap_len)
+  #     swap_count += 1
+  #     while self.need_to_heapify_down?(current_idx, heap_len)
+  #       best_child_idx = children_idx(current_idx, heap_len).max_by { |child_idx| self[child_idx] }
+  #       self.swap!(current_idx, best_child_idx)
+  #       current_idx = best_child_idx
+  #     end
+  #     current_idx = 0
+  #   end
+  # end
+
   def unheapify!
-    swap_count = 0
-    current_idx = 0
-    while swap_count < self.size
-      heap_len = self.length - 1 - swap_count
+    self.each_index do |current_idx|
+      heap_len = self.length - 1 - current_idx
       self.swap!(0, heap_len)
-      swap_count += 1
+      current_idx = 0
       while self.need_to_heapify_down?(current_idx, heap_len)
         best_child_idx = children_idx(current_idx, heap_len).max_by { |child_idx| self[child_idx] }
         self.swap!(current_idx, best_child_idx)
         current_idx = best_child_idx
       end
-      current_idx = 0
     end
   end
 
   protected
   def swap!(idx1, idx2)
     self[idx1], self[idx2] = self[idx2], self[idx1]
+  end
+end
+
+class Array
+  def heap_sort!
+    return self if self.size < 2
+
+    # heapify
+    self.each_index do |idx|
+
+    end
   end
 end
 
