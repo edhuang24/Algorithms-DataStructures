@@ -129,17 +129,67 @@ class Array
   end
 end
 
+# this version of heapsort is optimized
 class Array
   def heap_sort!
     return self if self.size < 2
 
     # heapify
     self.each_index do |idx|
-
+      while self[idx] > self[(idx - 1) / 2] && idx > 0
+        self[idx], self[(idx - 1) / 2] = self[(idx - 1) / 2], self[idx]
+        idx = (idx - 1) / 2
+      end
     end
+
+    # unheapify!
+    self.each_index do |idx|
+      swap_idx = self.length - 1 - idx
+      self[0], self[swap_idx] = self[swap_idx], self[0]
+
+      idx = 0
+      while idx * 2 + 1 < swap_idx
+        child_idx = idx * 2 + 1
+        if child_idx < swap_idx - 1 && self[child_idx] < self[child_idx + 1]
+          child_idx += 1
+        end
+        if self[idx] < self[child_idx]
+          self[idx], self[child_idx] = self[child_idx], self[idx]
+          idx = child_idx
+        else
+          break
+        end
+      end
+    end
+
+    # swap_idx = self.length - 1
+    # while swap_idx > 0
+    #   self[0], self[swap_idx] = self[swap_idx], self[0]
+    #   swap_idx -= 1
+    #
+    #   idx = 0
+    #   while idx * 2 + 1 <= swap_idx
+    #     child_idx = idx * 2 + 1
+    #     if child_idx < swap_idx && self[child_idx] < self[child_idx + 1]
+    #       child_idx += 1
+    #     end
+    #     if self[idx] < self[child_idx]
+    #       self[idx], self[child_idx] = self[child_idx], self[idx]
+    #       idx = child_idx
+    #     else
+    #       break
+    #     end
+    #   end
+    # end
+
+    self
   end
 end
 
 time = Time.now
 p [32,6,17,2,42,1,23,11].heapsort!
+p Time.now - time
+
+time = Time.now
+p [32,6,17,2,42,1,23,11].heap_sort!
 p Time.now - time
