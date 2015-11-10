@@ -664,7 +664,7 @@ def common_subsets(arr1, arr2)
   subsets(fast_intersection(arr1, arr2))
 end
 
-p common_subsets([1,2,3],[2,3,4])
+# p common_subsets([1,2,3],[2,3,4])
 
 # **************************************************************************** #
 
@@ -720,6 +720,61 @@ def sort2(arr, max)
   result
 end
 
-def sort3(strings, length)
+def sort2(arr, max)
+  counts = Hash.new { |h, k| h[k] = 0 }
+  arr.each { |el| counts[el] += 1}
 
+  result = []
+  counts.each do |k, v|
+    v.times { result << k }
+  end
+  result
 end
+
+def sort3(strings, length)
+  return strings if strings.size < 2
+
+  (length - 1).downto(0) do |idx|
+    buckets = Array.new(26) { [] }
+    strings.each do |string|
+      letter = string[idx]
+      buckets[letter.ord - "a".ord] << string
+    end
+
+    strings = []
+    buckets.each do |bucket|
+      bucket.each { |string| strings << string }
+    end
+  end
+
+  strings
+end
+
+# p sort3(["abce", "ewnf", "bnem", "dnew", "aedv", "abdb"], 4)
+
+
+# **************************************************************************** #
+
+# weighted_random_index
+
+# Given an array, write a function that will return a random index of the array. The probability of an index being returned is weighted by the value at that index against the sum of the array values. For example, for the array [4, 6, 8], index 0 should be returned with 4 in 18 odds, index 1 should be returned with 6 in 18 odds, and index 2 should be return with 8 in 18 odds. Implement this in O(n) time.
+
+def weighted_random_index(arr)
+  num = rand(arr.inject(:+))
+
+  sum = 0
+  arr.each_with_index do |n, idx|
+    sum += n
+    return idx if num < sum
+  end
+end
+
+p weighted_random_index([1,10,50])
+
+# **************************************************************************** #
+
+# move_zeros
+
+# Given an array, move all zeros to the end. The order of non-zero elements does not matter. Ex:
+# move_zeros([1, 2, 0, 3, 4, 0, 5, 6, 0]) == [1, 2, 6, 3, 4, 5, 0, 0, 0]
+# Algorithm should be O(n); use O(1) extra space.

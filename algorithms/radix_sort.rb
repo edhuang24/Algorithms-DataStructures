@@ -1,10 +1,9 @@
 def radix_sort(strings, length)
   return strings if strings.size < 2
 
-  buckets = Array.new(26) { [] }
-
-  strings.each do |string|
-    string.each_index do |idx|
+  (length - 1).downto(0) do |idx|
+    buckets = Array.new(26) { [] }
+    strings.each do |string|
       letter = string[idx]
       buckets[letter.ord - "a".ord] << string
     end
@@ -17,3 +16,5 @@ def radix_sort(strings, length)
 
   strings
 end
+
+p radix_sort(["abce", "ewnf", "bnem", "dnew", "aedv", "abdb"], 4)
