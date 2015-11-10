@@ -166,6 +166,28 @@ class BSTNode
 
     result
   end
+
+  def successor
+    node = self
+    if node.right
+      node = node.right
+      until node.left.nil?
+        node = node.left
+      end
+      return node
+    end
+
+    while node
+      parent_node = node.parent
+      if parent_node.nil?
+        return nil
+      elsif parent_node.left.val == node.val
+        return parent_node
+      else
+        node = parent_node
+      end
+    end
+  end
 end
 
 a = BSTNode.new(5)
@@ -178,5 +200,6 @@ a.insert(8)
 a.insert(4)
 a.insert(9)
 p a.all
-a.delete(5)
+a.delete(4)
 p a.all
+p a.successor.val
