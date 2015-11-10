@@ -85,5 +85,33 @@ class Array
 end
 
 time = Time.now
+p [32,6,17,2,42,1,23,11].in_place_quicksort!
+p Time.now - time
+
+# this version of the in-place quicksort doesn't abstract away the partition method
+class Array
+  def quick_sort!(start_idx = 0, len = self.size)
+    return self if self.size < 2
+
+    swap_idx = rand(len) + start_idx
+    self[start_idx], self[swap_idx] = self[swap_idx], self[start_idx]
+
+    pivot_idx = start_idx
+    idx = pivot_idx += 1
+    while idx < start_idx + len
+      if self[idx] < self[pivot_idx]
+        self[idx], self[pivot_idx + 1] = self[pivot_idx + 1], self[idx]
+        self[pivot_idx], self[pivot_idx + 1] = self[pivot_idx + 1], self[idx]
+        pivot_idx += 1
+      end
+      idx += 1
+    end
+
+    self.quick_sort!(start_idx, pivot_idx - start_idx)
+    self.quick_sort!(pivot_idx + 1, len - start_idx - (pivot_idx + 1))
+  end
+end
+
+time = Time.now
 p [32,6,17,2,42,1,23,11].quicksort!
 p Time.now - time
