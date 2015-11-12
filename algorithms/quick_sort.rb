@@ -97,7 +97,7 @@ class Array
     self[start_idx], self[swap_idx] = self[swap_idx], self[start_idx]
 
     pivot_idx = start_idx
-    idx = pivot_idx += 1
+    idx = pivot_idx + 1
     while idx < start_idx + len
       if self[idx] < self[pivot_idx]
         self[idx], self[pivot_idx + 1] = self[pivot_idx + 1], self[idx]
