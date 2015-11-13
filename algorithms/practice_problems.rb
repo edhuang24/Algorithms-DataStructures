@@ -808,23 +808,25 @@ end
 
 # Implement the 'look and say' function. 'Look and say' takes an input array and outputs an array that describes the count of the elements in the input array as they appear in order.
 
-# def look_and_say(arr)
-#   return [] if arr.empty?
-#
-#   hash_counter = Hash.new { |h, k| h[k] = 0 }
-#
-#   arr.each do |el|
-#     hash_counter[el] += 1
-#   end
-#
-#   result = []
-#
-#   hash_counter.each do |k, v|
-#     result << [k, v]
-#   end
-#
-#   result
-# end
+=begin
+def look_and_say(arr)
+  return [] if arr.empty?
+
+  hash_counter = Hash.new { |h, k| h[k] = 0 }
+
+  arr.each do |el|
+    hash_counter[el] += 1
+  end
+
+  result = []
+
+  hash_counter.each do |k, v|
+    result << [k, v]
+  end
+
+  result
+end
+=end
 
 def look_and_say(arr)
   return [] if arr.empty?
@@ -979,8 +981,9 @@ def file_paths(directory)
   result = []
 
   directory.each do |k, v|
+    # debugger
     if v.is_a?(Hash)
-      file_paths(v).each { |file| k + "/" + file }
+      file_paths(v).each { |file| result << k + "/" + file }
     else
       result << k
     end
@@ -988,3 +991,208 @@ def file_paths(directory)
 
   result
 end
+
+files = {
+  'a' => {
+    'b' => {
+      'c' => {
+        'd' => {
+          'e' => true
+        },
+
+        'f' => true
+      }
+    }
+  }
+}
+
+# p file_paths(files)
+
+# **************************************************************************** #
+
+# find_missing_number
+
+# Assume an array of non-negative integers. A second array is formed by shuffling the elements of the first array and deleting a random element. Given these two arrays, find which element is missing in the second array. Do this in linear time with constant memory use.
+
+def find_missing_number(arr1, arr2)
+  arr1.inject(:+) - arr2.inject(:+)
+end
+
+# p find_missing_number([1,2,3,4], [4,1,2])
+
+# **************************************************************************** #
+
+# is_shuffle?
+
+# Given three strings, return whether the third is an interleaving of the first two. Interleaving means it only contains characters from the other two, no more no less, and preserves their character ordering. "abdecf" is an interleaving of "abc" and "def". Note that the first two strings needn't be in alphabetical order like these.
+#
+# You may assume that the first two strings do not contain any characters in common.
+
+def is_shuffle?(str1, str2, str3)
+  i = 0
+  j = 0
+
+  str3.each_char.with_index do |letter, idx|
+    if letter == str1[i]
+      i += 1
+    elsif letter == str2[j]
+      j += 1
+    else
+      return false
+    end
+  end
+
+  true
+end
+
+# p is_shuffle?("abc", "def", "abdcef")
+
+# Next, relax the assumption that the first two strings contain no overlap. Analyze the time-complexity of your solution. You may wish to view this problem recursively.
+
+def is_shuffle?(str1, str2, str3)
+  i = 0
+  j = 0
+
+  str3.each_char.with_index do |letter, idx|
+    if letter == str1[i] && letter == str2[j]
+      return is_shuffle?(str1[i + 1..-1], str2[j..-1], str3[idx + 1..-1]) || is_shuffle?(str1[i..-1], str2[j + 1..-1], str3[idx + 1..-1])
+    elsif letter == str1[i]
+      i += 1
+    elsif letter == str2[j]
+      j += 1
+    else
+      return false
+    end
+  end
+
+  true
+end
+
+=begin
+def is_shuffle?(str1, str2, str3)
+  return str1.empty? && str2.empty? if str3.empty?
+
+  if str1[0] == str3[0]
+    return true if is_shuffle?(str1[1..-1], str2, str3[1..-1])
+  end
+
+  if str2[0] == str3[0]
+    return true if is_shuffle?(str1, str2[1..-1], str3[1..-1])
+  end
+
+  false
+end
+=end
+
+# p is_shuffle?("abd", "def", "abdedf")
+
+# Our previous is_shuffle solution runs in O(2**n) time because each step might involve 2 solutions of a subproblem of size n-1.
+#
+# That is a terrible time complexity. First, let's change our solution to an iterative solution using breadth first search, rather than a recursive depth first search.
+
+def is_shuffle?(str1, str2, str3)
+  queue = []
+  queue << [0, 0]
+
+  until queue.empty?
+    current = queue[0]
+    idx = current[0] + current[1]
+
+    if idx == str3.length
+      return true
+    end
+
+    if str1[current[0]] == str3[idx]
+      queue << [current[0] + 1, current[1]]
+    end
+
+    if str2[current[1]] == str3[idx]
+      queue << [current[0], current[1] + 1]
+    end
+
+    queue.shift
+  end
+
+  false
+end
+
+# p is_shuffle?("abd", "def", "abdedf")
+
+# This still sucks. It still searches the entire tree, branching out as much as twice at every step. This will use tons of memory, too, because it is breadth first.
+#
+# You can improve it:
+
+=begin
+def is_shuffle?(str1, str2, str3)
+  seen = {}
+  queue = []
+  queue << [0, 0]
+
+  until queue.empty?
+    current = queue[0]
+    idx = current[0] + current[1]
+
+    if idx == str3.length
+      return true
+    end
+
+    # this method of using the hash is suboptimal - you don't even want to push into the queue if seen[current] is true
+    if seen[current]
+      queue.shift
+    else
+      if str1[current[0]] == str3[idx]
+        queue << [current[0] + 1, current[1]]
+      end
+
+      if str2[current[1]] == str3[idx]
+        queue << [current[0], current[1] + 1]
+      end
+
+      seen[queue.shift] == true
+    end
+  end
+
+  false
+end
+=end
+
+def is_shuffle?(str1, str2, str3)
+  seen = {}
+  queue = []
+  queue << [0, 0]
+
+  until queue.empty?
+    current = queue[0]
+    idx = current[0] + current[1]
+
+    if idx == str3.length
+      return true
+    end
+
+    # this method of using the hash is suboptimal - you don't even want to push into the queue if seen[current] is true
+
+    if str1[current[0]] == str3[idx]
+      unless seen[[current[0] + 1, current[1]]]
+        queue << [current[0] + 1, current[1]]
+      end
+    end
+
+    if str2[current[1]] == str3[idx]
+      unless seen[[current[0], current[1] + 1]]
+        queue << [current[0], current[1] + 1]
+      end
+    end
+
+    seen[queue.shift] == true
+  end
+
+  false
+end
+
+# p is_shuffle?("abd", "def", "abdedf")
+
+# **************************************************************************** #
+
+# binary
+
+# Write a function that takes an integer and returns it in binary form.
