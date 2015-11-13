@@ -1,3 +1,5 @@
+require "byebug"
+
 # digital_root
 
 # Write a method, digital_root(num). It should sum the digits of a positive integer. If it is greater than or equal to 10, sum the digits of the resulting number. Keep repeating until there is only one digit in the result, called the "digital root". Do not use string conversion within your method.
@@ -769,7 +771,7 @@ def weighted_random_index(arr)
   end
 end
 
-p weighted_random_index([1,10,50])
+# p weighted_random_index([1,10,50])
 
 # **************************************************************************** #
 
@@ -778,3 +780,211 @@ p weighted_random_index([1,10,50])
 # Given an array, move all zeros to the end. The order of non-zero elements does not matter. Ex:
 # move_zeros([1, 2, 0, 3, 4, 0, 5, 6, 0]) == [1, 2, 6, 3, 4, 5, 0, 0, 0]
 # Algorithm should be O(n); use O(1) extra space.
+
+def move_zeros(arr)
+  i = 0
+  swap_idx = arr.length - 1
+  swap_count = 0
+  while i < arr.length
+    # debugger
+    if arr[i] == 0 && i < swap_idx
+      until arr[swap_idx] != 0
+        swap_idx -= 1
+      end
+      arr[i], arr[swap_idx] = arr[swap_idx], arr[i]
+      swap_idx -= 1
+      swap_count += 1
+    end
+    i += 1
+  end
+  arr
+end
+
+# p move_zeros([1, 2, 0, 3, 0, 0, 5, 6, 0])
+
+# **************************************************************************** #
+
+# look_and_say
+
+# Implement the 'look and say' function. 'Look and say' takes an input array and outputs an array that describes the count of the elements in the input array as they appear in order.
+
+# def look_and_say(arr)
+#   return [] if arr.empty?
+#
+#   hash_counter = Hash.new { |h, k| h[k] = 0 }
+#
+#   arr.each do |el|
+#     hash_counter[el] += 1
+#   end
+#
+#   result = []
+#
+#   hash_counter.each do |k, v|
+#     result << [k, v]
+#   end
+#
+#   result
+# end
+
+def look_and_say(arr)
+  return [] if arr.empty?
+
+  result = []
+  count = 1
+
+  arr.each_with_index do |el, idx|
+    if arr[idx + 1] != arr[idx] || idx = arr.length - 1
+      result << [arr[idx], count]
+      count = 1
+    else
+      count += 1
+    end
+  end
+
+  result
+end
+
+# p look_and_say([1, 2, 1, 1])
+
+# **************************************************************************** #
+
+# sums upon sums
+
+# I give you a scrambled list of n unique integers between 0 and n. Tell me what number is missing?
+#
+# If I let you use O(nlog(n)) time, what is a naive way of doing this?
+#
+# Next, what if I require that you solve the problem in O(n) time? What datastructure might you use?
+#
+# Finally, how could you solve the problem in O(n), and also O(1) space?
+
+# a) sort and look for gap
+
+# b) use a hash and set value to true if the key exists in the array
+
+# c) either (0..n).inject(:+) - arr.inject(:+) or n * (n + 1) / 2 - arr.inject(:+)
+
+# **************************************************************************** #
+
+# bonus_stack
+
+# Implement a stack with a method max that returns the maximum value of the stack. max should run in O(1) time.
+
+class MaxStack
+  def initialize
+    @store = []
+    @max = 0
+  end
+
+  def push(val)
+    @max = val if val > self.max
+    @store << [val, @max]
+    val
+  end
+
+  def pop
+    value = @store.pop[0]
+    @max = @store[-1][1]
+    value
+  end
+
+  def max
+    @max
+  end
+end
+
+# **************************************************************************** #
+
+# StackQueue
+
+# Implement a queue using stacks. That is, write enqueue and dequeue using only push and pop operations.
+#
+# In terms of performance, enqueue should be O(1), but dequeue may be worst-case O(n). In terms of ammortized time, dequeue should be O(1). Prove that your solution accomplishes this.
+
+class StackQueue
+  def initialize
+    @in, @out = [], []
+  end
+
+  def enqueue(val)
+    @in << val
+  end
+
+  def dequeue
+    if @out.empty?
+      until @in.empty?
+        @out << @in.pop
+      end
+    end
+
+    @out.pop
+  end
+
+  def inspect
+    @out.reverse + @in
+  end
+end
+
+# **************************************************************************** #
+
+# Windowed Max Range
+
+# Given an array, and a window size w, find the maximum max - min within a range of w elements.
+#
+# For instance:
+#
+# windowed_max_range([1, 0, 2, 5, 4, 8], 2) == 4 # 4, 8
+# windowed_max_range([1, 0, 2, 5, 4, 8], 3) == 5 # 0, 2, 5
+# windowed_max_range([1, 0, 2, 5, 4, 8], 4) == 6 # 2, 5, 4, 8
+# # still 6!
+# windowed_max_range([1, 3, 2, 5, 4, 8], 5) == 6 # 3, 2, 5, 4, 8
+# You can write a naive version that considers all subarrays of size w. However, if w = n/2 then there are n/2 subarrays of length n/2 to consider. Therefore, I would call this solution quadratic. Write it anyway :-)
+#
+# Let's improve it to O(n). Here are some hints:
+#
+# First solve MaxStack. Could you write simply a MinMaxStack to track both the min and the max in a stack?
+# Next, solve StackQueue. Could you use your MinMaxStack to write a MinMaxStackQueue which tracks both the min and max.
+# Last, can you use your MinMaxStackQueue to solve the problem?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# **************************************************************************** #
+
+# Hash Dictionary
+
+# Suppose a hash representing a directory. All keys are strings with names for either folders or files. Keys that are folders point to nested hashes. Keys that are files point to "true". Write a function that takes such a hash and returns an array of strings with the path to each file in the hash.
+
+def file_paths(directory)
+  result = []
+
+  directory.each do |k, v|
+    if v.is_a?(Hash)
+      file_paths(v).each { |file| k + "/" + file }
+    else
+      result << k
+    end
+  end
+
+  result
+end
