@@ -1196,3 +1196,7 @@ end
 # binary
 
 # Write a function that takes an integer and returns it in binary form.
+
+def binary(int)
+  
+end
