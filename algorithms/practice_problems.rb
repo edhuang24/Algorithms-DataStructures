@@ -1198,5 +1198,183 @@ end
 # Write a function that takes an integer and returns it in binary form.
 
 def binary(int)
-  
+  result = []
+
+  while int > 0
+    result << (int % 2)
+    int = int / 2
+  end
+
+  result.empty? ? "0" : result.reverse.join("")
 end
+
+# p binary(12)
+
+# 0 -> 0
+# 1 -> 1
+# 2 -> 10
+# 3 -> 11
+# 4 -> 100
+# 5 -> 101
+# 6 -> 110
+# 7 -> 111
+# 8 -> 1000
+# 9 -> 1001
+# 10 -> 1010
+# 11 -> 1011
+# 12 -> 1100
+# 13 -> 1101
+# 14 -> 1110
+# 15 -> 1111
+
+# **************************************************************************** #
+
+# factorial
+
+# Implement factorial with and without recursion. What is a potential disadvantage of the recursive way?
+#
+# What is tail-recursion? Does Ruby have tail-call optimization? Pretend it did; write a tail-recursive version of rec_fac.
+
+def factorial(num)
+  result = 1
+
+  while num > 0
+    result = result * num
+    num -= 1
+  end
+
+  result
+end
+
+def factorial_rec(num)
+  return num if num == 1
+  factorial_rec(num - 1) * num
+end
+
+def factorial_rec(num, prod = 1)
+  return prod if num == 1
+  factorial_rec(num - 1, prod * num)
+end
+
+# p factorial(4)
+# p factorial_rec(4)
+
+# **************************************************************************** #
+
+# max_unique_psub
+
+# This is a hard one! Enjoy the challenge!
+#
+# Let's define a pseudo-substring: psub is a pseudo-substring of str if there exists some [i_0, i_1, ..., i_n] such that:
+#
+# i_0, ..., i_n is an increasing sequence; i_l < i_m for l < m.
+# psub[l] == str[i_l]
+# For example:
+# "abc" is a psub of "abcdef"
+# "ace" is a psub of "abcdef"
+# "cdf" is a psub of "abcdef"
+#
+# "fed" is _not_ a psub of "abcdef" (letters are out of order)
+#
+# psubs("abcd") == [
+#   "a",
+#   "ab",
+#   "abc",
+#   "abcd",
+#   "ac",
+#   "acd",
+#   "ad",
+#   "b",
+#   "bc",
+#   "bcd",
+#   "bd",
+#   "c",
+#   "cd",
+#   "d"
+# ]
+# Next, recall the definition of lexicographical order:
+#
+# str1 > str2 IF
+# (a) str1 != str2 AND EITHER
+# (b1) str2 is a prefix of str1 OR
+# (b2) at the first position at which str1 and str2 differ (say i), str1[i] > str2[i].
+# For instance: "abc" > "ab" and "acb" > "abc".
+#
+# Given a string str, find the lexicographical greatest psubstring. Solve it first by generating all psubstrings and picking the greatest (in Big-Oh, how many are there?).
+#
+# Next, improve your algorithm to do this in O(n) time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# **************************************************************************** #
+
+# permutations
+
+# Write a method that takes an array and returns all its permutations. Time/memory complexity should be proportional to the number of permutations; what is this?
+
+def permutations(arr)
+  return [[]] if arr.empty?
+
+  result = []
+  arr.length.times do |i|
+    el = arr[i]
+    rest = arr.take(i).concat(arr.drop(i + 1))
+
+    new_perms = permutations(rest).map { |perm| perm.unshift(el) }
+    result.concat(new_perms)
+  end
+
+  result
+end
+
+p permutations([1,2,3])
+
+# **************************************************************************** #
+
+# truckin'
+
+# Given a fleet of 50 trucks, each with a full fuel tank and a range of 100 miles, how far can you deliver a payload? You can transfer the payload from truck to truck, and you can transfer fuel from truck to truck. Assume all the payload will fit in one truck.
+
+# First, note that we have enough fuel for 50 * 100 == 5,000 truck miles. Our problem is that we can't put all the fuel on a single truck.
+#
+# Instead, begin by driving all 50 trucks simultaneously. After two miles, we will have burned 50 * 2 = 100 miles worth of fuel. This is one trucks worth of fuel. Because we only have 49 trucks worth of fuel left, it is unnecessary to drive all 50 trucks any more, because we can fit all the fuel in 49 trucks.
+#
+# Therefore, at the two mile mark, transfer all the fuel from one truck to the other trucks. Leave an empty truck at the two mile mark. All the other trucks are totally full of fuel.
+#
+# Next, drive the remaining 49 trucks for 100/49 miles. After 100/49 miles, we'll have burned another 100 miles worth of fuel, so we can fit all the fuel in the remaining 48 trucks.
+#
+# Continue like this until there is only one truck left, and it runs out of fuel.
+#
+# Let's calculate how many miles we can drive:
+#
+# 50 trucks of fuel: 100/50 miles
+# 49 trucks of fuel: 100/49 miles
+# 48 trucks of fuel: 100/48 miles
+# ...
+# 1 truck of fuel: 100/1 miles
+# Thus, you can then add up 100/50 + 100/49 + 100/48 + ... + 100/1. This is ~449.9.
