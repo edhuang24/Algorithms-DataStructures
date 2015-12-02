@@ -1462,5 +1462,24 @@ end
 # Write a JavaScript function to check if a binary tree is balanced. A tree is balanced if, at every node, the depth of subtree on the left hand side is equal to the depth of the subtree on the right (plus or minus one).
 
 def is_balanced_tree(node)
-  
+  weight(node) == false ? false : true
+end
+
+def weight(node)
+  if node == nil
+    return 0
+  end
+
+  left_weight = weight(node.left)
+  right_weight = weight(node.right)
+
+  if left_weight == false || !right_weight == false
+    return false
+  end
+
+  if (left_weight - right_weight).abs > 1
+    return false
+  end
+
+  return left_weight + right_weight + 1
 end
