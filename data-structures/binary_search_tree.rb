@@ -93,7 +93,7 @@ class BSTNode
     node ? current_node = node : current_node = self.find(val)
 
     # if the current node has two branches, replace the current node with the proper node
-    # then recursively call delete on the
+    # then recursively call delete on the proper node
     if current_node.left && current_node.right
       left_depth = current_node.left.max_depth
       right_depth = current_node.right.max_depth
