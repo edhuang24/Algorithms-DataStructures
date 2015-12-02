@@ -1427,3 +1427,40 @@ end
 # Imagine two runners, running at the same speed across the linked lists. If one list is longer than the other, the shorter list's runner will reach the end first. The difference between the two runners' times is the difference in length between the two lists. Knowing this, we can give one runner a head-start of a distance equivalent to the difference in length between the two lists. Then traversing both lists at equal speed will result in the two runners colliding at the intersection point.
 
 # **************************************************************************** #
+
+# next_largest
+
+# Given a node in a Binary Search Tree, find the node with the next largest value. Assume you don't have the root of the tree, just a single node from it.
+
+def next_largest(node)
+  current = node
+
+  if current.right
+    current = current.right
+    until current.left == nil
+      current = current.left
+    end
+    return current
+  end
+
+  while current
+    parent = current.parent
+    if parent == nil
+      return nil
+    elsif parent.left == current
+      return parent
+    else
+      current = parent
+    end
+  end
+end
+
+# **************************************************************************** #
+
+# isBalancedTree
+
+# Write a JavaScript function to check if a binary tree is balanced. A tree is balanced if, at every node, the depth of subtree on the left hand side is equal to the depth of the subtree on the right (plus or minus one).
+
+def is_balanced_tree(node)
+  
+end
