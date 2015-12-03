@@ -1489,6 +1489,7 @@ end
 # is_bst?
 
 # Given a binary tree, write a function to check whether it’s a binary search tree or not.
+# Time Complexity: O(n)
 
 def is_bst?(node)
   return true if node.nil?
@@ -1506,6 +1507,25 @@ end
 
 # Find the lowest common ancestor of two nodes in a binary search tree. Write the function in JS. Assume I give you both the root and the two nodes.
 
-def findCommonAncestor(root, nodeA, nodeB)
+def find_common_ancestor(root, nodeA, nodeB)
+  current = root;
+  while current
+    if current == nodeA || current == nodeB
+      return current
+    end
 
+    if current.value < nodeA.value && current.value < nodeB.value
+      current = current.right
+    elsif current.value > nodeA.value && current.value > nodeB.value
+      current = current.left
+    else
+      return current
+    end
+  end
 end
+
+# **************************************************************************** #
+
+# rand7
+
+# Write a method to generate a random integer (0...7), given a method that generates a random integer between (0...5). The resulting rand7 distribution must be uniform.
