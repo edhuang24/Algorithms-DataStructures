@@ -1352,7 +1352,7 @@ def permutations(arr)
   result
 end
 
-p permutations([1,2,3])
+# p permutations([1,2,3])
 
 # **************************************************************************** #
 
@@ -1529,3 +1529,66 @@ end
 # rand7
 
 # Write a method to generate a random integer (0...7), given a method that generates a random integer between (0...5). The resulting rand7 distribution must be uniform.
+
+def rand7
+  while true
+    temp = rand(5)
+    num = 5 * temp + temp
+    return num % 7 if num < 21
+  end
+end
+
+# **************************************************************************** #
+
+# matchsticks
+
+# You have two sticks and a matchbox. Each stick takes exactly an hour to burn from one end to the other.
+#
+# The sticks are weird, in that they do not burn at a steady. If you break a stick in half, it is not guaranteed that each half will take 30min to burn.
+#
+# How would you measure exactly 45 minutes by burning these sticks?
+
+# Take stick1, light it at both ends. At the same time, light stick2 at
+# one end. When stick1 is extinguished, 30min have passed. Now, light stick2 at
+# the other end. The stick will take another 15min to finish burning.
+
+# **************************************************************************** #
+
+# sudoku_solver
+
+# How would you write a program to solve Sudoku? (high level description)
+
+# Loop through all the empty cells, and for each cell generate a list of possible values. If a cell has only one possible value, fill it in.
+# Starting from the cells that have the shortest list of possible values, try the value, and recurse to see if the puzzle can be solved.
+
+# **************************************************************************** #
+
+# sqroot
+
+# Implement a square root function that uses only addition, subtraction, multiplication and division in less than linear time. You may assume that input is always a perfect square.
+
+def sqroot(num, candidates = nil)
+  candidates ||= (0..num / 2).to_a
+  middle = candidates.length / 2
+  case num <=> (candidates[middle] * candidates[middle])
+  when -1
+      sqroot(num, candidates.take(middle))
+  when 0
+      middle
+  when 1
+      sub_answer = sqroot(num, candidates.drop(middle + 1))
+      (sub_answer.nil?) ? nil : (middle + 1) + sub_answer
+  end
+end
+
+# p sqroot(64)
+
+# **************************************************************************** #
+
+# word_chains
+
+# Given a source word, target word and an English dictionary, transform the source word to target by changing/adding/removing 1 character at a time, while all intermediate words being valid English words. Return the transformation chain which has the smallest number of intermediate words.
+
+def word_chains(word)
+
+end
