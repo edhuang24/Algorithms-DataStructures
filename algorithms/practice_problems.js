@@ -40,7 +40,7 @@ console.log([1,2,3,4,5].myMap(function (x) { return Math.pow(2, x); }));
 
 // Write a JavaScript function to check if a binary tree is balanced. A tree is balanced if, at every node, the depth of subtree on the left hand side is equal to the depth of the subtree on the right (plus or minus one).
 
-function isBalanced (node) {
+function isBalancedTree (node) {
   return balancedWeight(node) != -1;
 }
 
@@ -64,5 +64,5 @@ function balancedWeight (node) {
   }
 
   // total weight is weight of subtrees plus this node here.
-  return leftWeight + rightWeight + 1;
+  return Math.max.call(null, leftWeight, rightWeight) + 1;
 }

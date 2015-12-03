@@ -1481,5 +1481,31 @@ def weight(node)
     return false
   end
 
-  return left_weight + right_weight + 1
+  return [left_weight, right_weight].max + 1
+end
+
+# **************************************************************************** #
+
+# is_bst?
+
+# Given a binary tree, write a function to check whether it’s a binary search tree or not.
+
+def is_bst?(node)
+  return true if node.nil?
+
+  if (node.left && node.left.value > node.value) || (node.right && node.right.value < node.value)
+    return false
+  end
+
+  is_bst?(node.left) && is_bst?(node.right)
+end
+
+# **************************************************************************** #
+
+# findCommonAncestor
+
+# Find the lowest common ancestor of two nodes in a binary search tree. Write the function in JS. Assume I give you both the root and the two nodes.
+
+def findCommonAncestor(root, nodeA, nodeB)
+
 end
