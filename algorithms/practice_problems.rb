@@ -1589,6 +1589,84 @@ end
 
 # Given a source word, target word and an English dictionary, transform the source word to target by changing/adding/removing 1 character at a time, while all intermediate words being valid English words. Return the transformation chain which has the smallest number of intermediate words.
 
-def word_chains(word)
+require "set"
 
+class WordChainer
+
+  attr_reader :dictionary, :current_words, :all_seen_words
+
+  def initialize(dictionary_file_name)
+      @dictionary = Set.new
+
+      File.readlines(dictionary_file_name).each do |line|
+        @dictionary << line.chomp
+      end
+  end
+
+  def adjacent_words(word)
+    adjacent_words = []
+
+    word.each_char.with_index do |old_letter, i|
+      ('a'..'z').each do |new_letter|
+        next if old_letter == new_letter
+
+        new_word = word.dup
+        new_word[i] = new_letter
+
+        adjacent_words << new_word if dictionary.include?(new_word)
+      end
+    end
+
+    adjacent_words
+  end
+
+  def is_adjadent?(word_one, word_two)
+    strikes = 0
+
+    word_two.split("").each_with_index do |letter, index|
+      if word_one[index] != letter
+        strikes += 1
+      end
+    end
+
+    if strikes == 1
+      return true
+    end
+  end
+
+  def run(source, target)
+    @current_words = [source]
+    @all_seen_words = { source => nil }
+
+    until current_words.empty? || all_seen_words.include?(target)
+      new_current_words = []
+
+      current_words.each do |word|
+        adjacent_words(word).each do |el|
+          next if all_seen_words.has_key?(el)
+          new_current_words << el
+          all_seen_words[el] = word
+        end
+        @current_words = new_current_words
+      end
+    end
+
+    if current_words.empty?
+      return "it is not possible to reach the target"
+    else
+  	  build_path(target)
+    end
+  end
+
+  def build_path(target)
+  	path = [target]
+  	current = target
+
+  	until all_seen_words[current].nil?
+  	  path << all_seen_words[current]
+  	  current = all_seen_words[current]
+  	end
+
+  	return path.reverse
+  end
 end
