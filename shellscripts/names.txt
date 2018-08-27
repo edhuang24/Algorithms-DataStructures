@@ -1,0 +1,3 @@
+ehuang   console  Aug 17 05:14 
+ehuang   ttys000  Aug 17 05:14 
+ehuang   ttys001  Aug 17 05:14 

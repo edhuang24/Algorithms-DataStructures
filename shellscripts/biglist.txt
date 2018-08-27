@@ -1,0 +1,10 @@
+pear
+banana
+apple
+peach
+grape
+orange
+dog
+cat
+bird
+ape
