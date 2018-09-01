@@ -20,3 +20,16 @@ class Array
 end
 
 p [1,2,4,6,9,13,18,21].bsearch(6)
+
+def binary_search(array, value)
+    mid = array.length / 2
+
+    if value < array[mid]
+        return binary_search(array[0...mid], value)
+    elsif value > array[mid]
+        function = binary_search(array[mid + 1..-1], value)
+        function.nil? ? nil : function + mid + 1
+    else
+        return mid
+    end
+end

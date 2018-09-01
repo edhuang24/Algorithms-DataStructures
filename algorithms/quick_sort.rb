@@ -27,6 +27,30 @@ class Array
   end
 end
 
+def quicksort(arr)
+  return arr if arr.length < 2
+
+  rand_idx = rand(arr.length)
+  until rand_idx != 0
+    rand_idx = rand(arr.length)
+  end
+
+  arr[0], arr[rand_idx] = arr[rand_idx], arr[0]
+
+  pivot = arr.shift
+  left, right = [], []
+
+  arr.each do |el|
+    if el < pivot
+      left << el
+    else
+      right << el
+    end
+  end
+
+  quicksort(left) + [pivot] + quicksort(right)
+end
+
 time = Time.now
 p [32,6,17,2,42,1,23,11].quicksort
 p Time.now - time
