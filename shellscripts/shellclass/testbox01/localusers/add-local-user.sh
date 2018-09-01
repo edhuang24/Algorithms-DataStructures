@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Make sure the script is being executed with superuser privileges.
-if [[ "${UID}" -ne 0 ]]
+if [[ "${UID}" != 0 ]]
 then
   echo 'Please run this script with root privileges'
   exit 1
