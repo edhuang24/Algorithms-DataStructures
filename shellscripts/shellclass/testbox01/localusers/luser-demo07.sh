@@ -9,7 +9,7 @@ echo "Parameter 3: ${3}"
 echo
 
 # Loop through all the positional parameters.
-while [[ "${#}" > 0 ]]
+while [[ ${#} > 0 ]]
 do
   echo "Number of parameters: ${#}"
   echo "Parameter 1: ${1}"
