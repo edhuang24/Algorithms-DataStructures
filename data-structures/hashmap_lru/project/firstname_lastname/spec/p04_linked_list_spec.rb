@@ -39,6 +39,7 @@ describe LinkedList do
     it "updates nodes" do
       empty_list.append(:first, 1)
       empty_list.update(:first, 2)
+      p empty_list.first
       expect(empty_list.first.val).to be 2
     end
 
