@@ -543,6 +543,52 @@ end
 
 # **************************************************************************** #
 
+# Bread-first Search
+
+def bfs(target_value)
+  queue = []
+  queue.push(self)
+
+  while queue.length > 0
+    current = queue.shift
+    if current.value == target_value
+      return current
+    else
+      queue += current.children
+    end
+  end
+
+  # indicates target_value was not found
+  return nil
+end
+
+# **************************************************************************** #
+
+# Depth-first Search
+
+def dfs(target_value)
+  stack = []
+  stack.push(self)
+
+  while stack.length > 0
+    current = stack.pop
+    if current.value == target_value
+      return current
+    else
+      stack += current.children
+    end
+  end
+
+  # indicates target_value was not found
+  return nil
+end
+
+def dfs(target_value)
+  
+end
+
+# **************************************************************************** #
+
 # productify
 
 # Given a list of numbers in an array, replace all the numbers with the product of all other numbers. Do this in O(n) time without using division.
