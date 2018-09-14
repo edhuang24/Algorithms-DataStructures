@@ -292,7 +292,7 @@ end
 def binary_search(array, target)
   mid = array.length / 2
 
-  if value < array[mid]
+  if target < array[mid]
     binary_search(array[0...mid], target)
   elsif value > array[mid]
     function = binary_search(array[mid + 1..-1], target)
@@ -300,6 +300,20 @@ def binary_search(array, target)
   else
     return mid
   end
+end
+
+def quicksort(arr)
+end
+
+def binary_search(arr, target)
+end
+
+def merge_sort(arr)
+  
+end
+
+def merge(left, right)
+
 end
 
 # You are given a list of numbers in an array.

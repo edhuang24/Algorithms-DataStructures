@@ -584,7 +584,16 @@ def dfs(target_value)
 end
 
 def dfs(target_value)
-  
+  if self.value == target_value
+    return self
+  end
+
+  children.each do |child|
+    result = child.dfs(target_value)
+    return result if result
+  end
+
+  return nil
 end
 
 # **************************************************************************** #
@@ -626,6 +635,16 @@ end
 def subsets(arr)
   return [[]] if arr.empty?
   subsets(arr.drop(1)) + subsets(arr.drop(1)).map { |subs| subs + [arr[0]] }
+end
+
+def subsets(arr)
+  return [[]] if arr.empty?
+
+  val = arr[0]
+  subs = subsets(arr.drop(1))
+  new_subs = subs.map { |sub| sub + [val] }
+
+  subs + new_subs
 end
 
 # p subsets([3,4,6])
