@@ -271,6 +271,9 @@ def quicksort(arr)
   return arr if length < 2
 
   rand_idx = rand(arr.length)
+  until rand_idx != 0
+    rand_idx = rand(arr.length)
+  end
   arr[0], arr[rand_idx] = arr[rand_idx], arr[0]
 
   pivot = arr.shift
@@ -309,7 +312,7 @@ def binary_search(arr, target)
 end
 
 def merge_sort(arr)
-  
+
 end
 
 def merge(left, right)
