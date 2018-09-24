@@ -77,6 +77,40 @@ class Array
   end
 end
 
-class Stack
+class StackNode
+  attr_accessor :data, :next
 
+  def initialize(data = nil, next = nil)
+    @data = data
+    @next = next
+  end
+end
+
+class Stack
+  attr_accessor :top
+
+  def initialize(top = nil)
+    @top = top
+  end
+
+  def empty?
+    return top.nil?
+  end
+
+  def peek
+    raise "empty Stack" if empty?
+    return top.data
+  end
+
+  def push(node)
+    top.next = node
+    top = node
+  end
+
+  def pop
+    raise "empty Stack" if empty?
+    data = top.data
+    top = top.next
+    return data
+  end
 end
