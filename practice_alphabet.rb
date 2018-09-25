@@ -215,3 +215,99 @@ end
 #     self[idx1], self[idx2] = self[idx2], self[idx1]
 #   end
 # end
+
+def BSTNode
+  attr_accessor :val, :left, :right, :parent, :depth
+
+  def initialize(val, parent = nil)
+    @val = val
+    @left = nil
+    @right = nil
+    @parent = parent
+    @depth = @parent? @parent.depth + 1 : 1
+  end
+
+  def find_root
+    current_node = self
+
+    until current_node.parent.nil?
+      current_node = current_node.parent
+    end
+
+    return current_node
+  end
+
+  def find(val)
+    current_node = find_root
+
+    until current_node.val == val
+      if current_node.val < val
+        current_node = current_node.right
+      else
+        current_node - current_node.left
+      end
+    end
+
+    return current_node
+  end
+
+  def min
+    current_node = self
+
+    until current_node.left.nil?
+      current_node = current_node.left
+    end
+
+    return current_node
+  end
+
+  def max
+    current_node = self
+
+    until current_node.right.nil?
+      current_node = current_node.right
+    end
+
+    return current_node
+  end
+
+  def max_depth
+    queue = []
+    max_depth = 0
+    current_node = self
+    queue.push(current_node)
+
+    until queue.empty?
+      current_node = queue[0]
+      queue.push(current_node.left) if current_node.left
+      queue.push(current_node.right) if current_node.right
+      if current_node.depth > max_depth
+        max_depth = current_node.depth
+      end
+      queue.shift
+    end
+
+    max_depth
+  end
+
+  def insert(val)
+    current_node = find_root
+
+    until (val < current_node.val && current_node.left.nil?) || (val > current_node.val && current_node.right.nil?)
+      if val < current_node.val
+        current_node = current_node.left
+      else
+        current_node = current_node.right
+      end
+    end
+
+    new_node = BSTNode.new(val)
+    val < current_node.val ? current_node.left = new_node : current_node.right = new_node
+
+    return new_node
+  end
+
+  def delete(val)
+    
+  end
+end

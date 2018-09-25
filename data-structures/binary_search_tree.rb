@@ -8,7 +8,7 @@ class BSTNode
     @left = nil
     @right = nil
     @parent = parent
-    @depth = 1 || @parent.depth + 1
+    @depth = @parent ? @parent.depth + 1 : 1
   end
 
   def find_root
@@ -24,12 +24,16 @@ class BSTNode
   def find(val)
     current_node = self.find_root
 
-    until current_node.val == val
-      if current_node.val < val
-        current_node = current_node.right
-      else
-        current_node = current_node.left
+    begin
+      until current_node.val == val
+        if current_node.val < val
+          current_node = current_node.right
+        else
+          current_node = current_node.left
+        end
       end
+    rescue StandardError => error
+      p "node not found"
     end
 
     current_node
@@ -226,3 +230,7 @@ a.delete(4)
 p a.all
 p a.predecessor.val
 p a.successor.val
+p a.predecessor.depth
+p a.successor.depth
+p a.predecessor.predecessor.predecessor.depth
+p a.find(10)
