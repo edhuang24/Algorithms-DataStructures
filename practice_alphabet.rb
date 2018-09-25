@@ -114,3 +114,74 @@ class Stack
     return data
   end
 end
+
+class QueueNode
+  attr_accessor :data, :next
+
+  def initialize(data = nil, next = nil)
+    @data = data
+    @next = next
+  end
+end
+
+class Queue
+  attr_accessor :first, :last
+
+  def initialize(first = nil, last = nil)
+    @first = first
+    @last = last
+  end
+
+  def empty?
+    return first.nil?
+  end
+
+  def peek
+    raise "empty Queue" if empty?
+    return first.data
+  end
+
+  def push(node)
+    if last
+      last.next = node
+    end
+    last = node
+    if first.nil?
+      first = last
+    end
+  end
+
+  def shift
+    raise "empty Queue" if empty?
+    data = first.data
+    first = first.next
+    if first.nil?
+      last = nil
+    end
+    return data
+  end
+end
+
+# def mergesort(arr)
+#   return arr if arr.length < 2
+#
+#   midpt = arr.length / 2
+#   left = arr[0...midpt]
+#   right = arr[midpt..-1]
+#
+#   return merge(mergesort(left), mergesort(right))
+# end
+#
+# def merge(left, right)
+#   merged = []
+#
+#   while left.length > 0 && right.length > 0
+#     if left[0] < right[0]
+#       merged.push(left.shift)
+#     else
+#       merged.push(right.shift)
+#     end
+#   end
+#
+#   return merged + left + right
+# end
