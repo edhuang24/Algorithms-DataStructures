@@ -185,3 +185,33 @@ end
 #
 #   return merged + left + right
 # end
+
+# class array
+#   def quicksort!(start_idx = 0, len = self.length)
+#     return self if len < 2
+#
+#     swap!(start_idx, start_idx + rand(len))
+#     pivot_idx = partition!(start_idx, len)
+#
+#     quicksort!(start_idx, pivot_idx)
+#     quicksort!(pivot_idx + 1, len - (pivot_idx + 1) - start_idx)
+#   end
+#
+#   def partition!(start_idx, len)
+#     pivot_idx = start_idx
+#     i = pivot_idx + 1
+#     while i < start_idx + len
+#       if self[i] < self[pivot_idx]
+#         swap!(i, pivot_idx + 1)
+#         swap!(pivot_idx, pivot_idx + 1)
+#         pivot_idx += 1
+#       end
+#       i += 1
+#     end
+#     return pivot_idx
+#   end
+#
+#   def swap!(idx1, idx2)
+#     self[idx1], self[idx2] = self[idx2], self[idx1]
+#   end
+# end
