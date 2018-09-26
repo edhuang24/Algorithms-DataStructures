@@ -76,22 +76,22 @@ class BSTNode
     max_depth
   end
 
-  def insert(val)
-    current_node = self.find_root
-
-    until (val < current_node.val && current_node.left.nil?) || (val > current_node.val && current_node.right.nil?)
-      if val < current_node.val
-        current_node = current_node.left
-      else
-        current_node = current_node.right
-      end
-    end
-
-    new_node = BSTNode.new(val, parent = current_node)
-    val < current_node.val ? current_node.left = new_node : current_node.right = new_node
-
-    new_node
-  end
+  # def insert(val)
+  #   current_node = self.find_root
+  #
+  #   until (val < current_node.val && current_node.left.nil?) || (val > current_node.val && current_node.right.nil?)
+  #     if val < current_node.val
+  #       current_node = current_node.left
+  #     else
+  #       current_node = current_node.right
+  #     end
+  #   end
+  #
+  #   new_node = BSTNode.new(val, parent = current_node)
+  #   val < current_node.val ? current_node.left = new_node : current_node.right = new_node
+  #
+  #   new_node
+  # end
 
   def delete(val, node = nil)
     node ? current_node = node : current_node = self.find(val)
