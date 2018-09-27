@@ -76,22 +76,22 @@ class BSTNode
     max_depth
   end
 
-  # def insert(val)
-  #   current_node = self.find_root
-  #
-  #   until (val < current_node.val && current_node.left.nil?) || (val > current_node.val && current_node.right.nil?)
-  #     if val < current_node.val
-  #       current_node = current_node.left
-  #     else
-  #       current_node = current_node.right
-  #     end
-  #   end
-  #
-  #   new_node = BSTNode.new(val, parent = current_node)
-  #   val < current_node.val ? current_node.left = new_node : current_node.right = new_node
-  #
-  #   new_node
-  # end
+  def insert(val)
+    current_node = self.find_root
+
+    until (val < current_node.val && current_node.left.nil?) || (val > current_node.val && current_node.right.nil?)
+      if val < current_node.val
+        current_node = current_node.left
+      else
+        current_node = current_node.right
+      end
+    end
+
+    new_node = BSTNode.new(val, parent = current_node)
+    val < current_node.val ? current_node.left = new_node : current_node.right = new_node
+
+    new_node
+  end
 
   def delete(val, node = nil)
     node ? current_node = node : current_node = self.find(val)
@@ -216,6 +216,54 @@ class BSTNode
   end
 end
 
+# def print_in_order(node)
+#   return [] if node.nil?
+#   result = []
+#   result.concat(print_in_order(node.left))
+#   result.push(node.val)
+#   result.concat(print_in_order(node.right))
+#   return result
+# end
+
+def print_in_order(node)
+  if !node.nil?
+    print_in_order(node.left)
+    print node.val
+    print_in_order(node.right)
+  end
+end
+
+def print_pre_order(node)
+  if !node.nil?
+    print node.val
+    print_pre_order(node.left)
+    print_pre_order(node.right)
+  end
+end
+
+def print_post_order(node)
+  if !node.nil?
+    print_post_order(node.left)
+    print_post_order(node.right)
+    print node.val
+  end
+end
+
+def print_bfs(node)
+  queue = []
+  queue.push(node)
+  while !queue.empty?
+    current_node = queue.shift
+    print current_node.val
+    if current_node.left
+      queue.push(current_node.left)
+    end
+    if current_node.right
+      queue.push(current_node.right)
+    end
+  end
+end
+
 a = BSTNode.new(5)
 a.insert(3)
 a.insert(7)
@@ -225,6 +273,10 @@ a.insert(6)
 a.insert(8)
 a.insert(4)
 a.insert(9)
+p print_in_order(a)
+p print_pre_order(a)
+p print_post_order(a)
+p print_bfs(a)
 p a.all
 a.delete(4)
 p a.all
