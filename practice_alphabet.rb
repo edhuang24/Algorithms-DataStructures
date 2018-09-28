@@ -308,7 +308,7 @@ def BSTNode
   end
 
   def delete(val)
-    
+
   end
 end
 
@@ -376,7 +376,7 @@ def HashMap
     # LinkedList.get(key):
     # bucket_list = bucket(key)
     # node = bucket_list.head
-    # until node == tail
+    # until node == bucket_list.tail
     #   if node.key == key
     #     return val
     #   end
@@ -393,7 +393,7 @@ def HashMap
     # LinkedList.delete(key):
     # bucket_list = bucket(key)
     # node = bucket_list.head
-    # until node = tail
+    # until node = bucket_list.tail
     #   if node.key == key
     #     node.prev.next = node.next if node.prev
     #     node.next.prev = node.prev if node.next
@@ -410,6 +410,115 @@ def HashMap
     old_store = @store
     @store = Array.new(num_buckets * 2) { LinkedList.new }
 
+    old_store.each do |bucket_list|
+      bucket_list.each do |node|
+        set(node.key, node.val)
+      end
+    end
+  end
+
+  alias_method :[], :get
+  alias_method :[]=, :set
+end
+
+def HashMap
+  def initialize(num_buckets = 8)
+    @store = Array.new(num_buckets) { LinkedList.new }
+    @count = 0
+  end
+
+  def num_buckets
+    @store.length
+  end
+
+  def bucket(key)
+    @store[key.hash % num_buckets]
+  end
+
+  def include?(key)
+    # bucket(key).include?(key)
+
+    # LinkedList.include?(key)
+    bucket_list = bucket(key)
+    node = bucket_list.head
+    until node == bucket_list.tail
+      if node.key == key
+        return true
+      end
+      node = node.next
+    end
+    return false
+  end
+
+  def set(key, val)
+    resize! if @count >= num_buckets
+
+    # bucket_list = bucket(key)
+    # if bucket_list.include?(key)
+    #   bucket_list.update(key, val)
+    # else
+    #   bucket_list.append(key, val)
+    #   @count += 1
+    # end
+
+    # LinkedList.update(key, val)
+    bucket_list = bucket(key)
+    node = bucket_list.head
+    until node == bucket_list.tail
+      if node.key == key
+        node.val = val
+      end
+      node = node.next
+    end
+
+    # LinkedList.append(key, val)
+    new_node = Node.new(key, val)
+    tail.prev.next = node
+    node.prev = tail.prev
+    node.next = tail
+    tail.prev = node
+  end
+
+  def get(key)
+    # bucket(key).get(key)
+
+    # LinkedList.get(key)
+    bucket_list = bucket(key)
+    node = bucket_list.head
+    until node == bucket_list.tail
+      if node.key == key
+        return node.val
+      end
+      node = node.next
+    end
+    return nil
+  end
+
+  def delete(key)
+    # removed_key = bucket(key).remove(key)
+    # @count -= 1
+    # return removed_key
+
+    # LinkedList.remove(key)
+    bucket_list = bucket(key)
+    node = bucket_list.head
+    until node == bucket_list.tail
+      if node.key == key
+        node.prev.next = node.next if node.prev
+        node.next.prev = node.prev if node.next
+        deleted_node = node
+        node.prev, node.next = nil
+        return deleted_node
+      end
+      node = node.next
+    end
+    return nil
+  end
+
+  def resize!
+    old_store = @store
+
+    @store = Array.new(num_buckets * 2) { LinkedList.new() }
     old_store.each do |bucket_list|
       bucket_list.each do |node|
         set(node.key, node.val)
