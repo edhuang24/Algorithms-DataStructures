@@ -77,6 +77,29 @@ class Array
   end
 end
 
+def quicksort(arr)
+  return arr if arr.length < 2
+
+  pivot_idx = rand(arr.length)
+  until pivot_idx != 0
+    pivot_idx = rand(arr.length)
+  end
+  arr[0], arr[pivot_idx] = arr[pivot_idx], arr[0]
+
+  pivot = arr.shift
+  left, right = []
+
+  arr.each do |num|
+    if num <= pivot
+      left.push(num)
+    else
+      right.push(num)
+    end
+  end
+
+  return quicksort(left) + [pivot] + quicksort(right)
+end
+
 class StackNode
   attr_accessor :data, :next
 
@@ -312,114 +335,114 @@ def BSTNode
   end
 end
 
-def HashMap
-  def initialize(num_buckets = 8)
-    @store = Array.new(num_buckets) { LinkedList.new }
-    @count = 0
-  end
-
-  def num_buckets
-    @store.length
-  end
-
-  def bucket(key)
-    @store[key.hash % num_buckets]
-  end
-
-  def include?(key)
-    bucket(key).include?(key)
-
-    # LinkedList.include?(key):
-    # bucket_list = bucket(key)
-    # node = bucket_list.head
-    # until node == bucket_list.tail
-    #   if node.key == key
-    #     return true
-    #   end
-    #   node = node.next
-    # end
-    # return false
-  end
-
-  def set(key, val)
-    resize! if @count >= num_buckets
-
-    bucket_list = bucket(key)
-    if bucket_list.include?(key)
-      bucket_list.update(key, val)
-    else
-      bucket_list.append(key, val)
-      @count += 1
-    end
-
-    # LinkedList.update(key, val):
-    # node = bucket_list.head
-    # until node == bucket_list.tail
-    #   if node.key == key
-    #     node.val = val
-    #     return node
-    #   end
-    #   node = node.next
-    # end
-
-    # LinkedList.append(key, val):
-    # new_node = Node.new(key, val)
-    # new_node.prev = tail.prev
-    # tail.prev.next = new_node
-    # new_node.next = tail
-    # tail.prev = new_node
-  end
-
-  def get(key)
-    bucket(key).get(key)
-
-    # LinkedList.get(key):
-    # bucket_list = bucket(key)
-    # node = bucket_list.head
-    # until node == bucket_list.tail
-    #   if node.key == key
-    #     return val
-    #   end
-    #   node = node.next
-    # end
-    # return nil
-  end
-
-  def delete(key)
-    removed_key = bucket(key).delete(key)
-    count -= 1
-    return removed_key
-
-    # LinkedList.delete(key):
-    # bucket_list = bucket(key)
-    # node = bucket_list.head
-    # until node = bucket_list.tail
-    #   if node.key == key
-    #     node.prev.next = node.next if node.prev
-    #     node.next.prev = node.prev if node.next
-    #     node.prev = nil
-    #     node.next = nil
-    #     return node
-    #   end
-    #   node = node.next
-    # end
-    # return nil
-  end
-
-  def resize!
-    old_store = @store
-    @store = Array.new(num_buckets * 2) { LinkedList.new }
-
-    old_store.each do |bucket_list|
-      bucket_list.each do |node|
-        set(node.key, node.val)
-      end
-    end
-  end
-
-  alias_method :[], :get
-  alias_method :[]=, :set
-end
+# def HashMap
+#   def initialize(num_buckets = 8)
+#     @store = Array.new(num_buckets) { LinkedList.new }
+#     @count = 0
+#   end
+#
+#   def num_buckets
+#     @store.length
+#   end
+#
+#   def bucket(key)
+#     @store[key.hash % num_buckets]
+#   end
+#
+#   def include?(key)
+#     bucket(key).include?(key)
+#
+#     # LinkedList.include?(key):
+#     # bucket_list = bucket(key)
+#     # node = bucket_list.head
+#     # until node == bucket_list.tail
+#     #   if node.key == key
+#     #     return true
+#     #   end
+#     #   node = node.next
+#     # end
+#     # return false
+#   end
+#
+#   def set(key, val)
+#     resize! if @count >= num_buckets
+#
+#     bucket_list = bucket(key)
+#     if bucket_list.include?(key)
+#       bucket_list.update(key, val)
+#     else
+#       bucket_list.append(key, val)
+#       @count += 1
+#     end
+#
+#     # LinkedList.update(key, val):
+#     # node = bucket_list.head
+#     # until node == bucket_list.tail
+#     #   if node.key == key
+#     #     node.val = val
+#     #     return node
+#     #   end
+#     #   node = node.next
+#     # end
+#
+#     # LinkedList.append(key, val):
+#     # new_node = Node.new(key, val)
+#     # new_node.prev = tail.prev
+#     # tail.prev.next = new_node
+#     # new_node.next = tail
+#     # tail.prev = new_node
+#   end
+#
+#   def get(key)
+#     bucket(key).get(key)
+#
+#     # LinkedList.get(key):
+#     # bucket_list = bucket(key)
+#     # node = bucket_list.head
+#     # until node == bucket_list.tail
+#     #   if node.key == key
+#     #     return val
+#     #   end
+#     #   node = node.next
+#     # end
+#     # return nil
+#   end
+#
+#   def delete(key)
+#     removed_key = bucket(key).delete(key)
+#     count -= 1
+#     return removed_key
+#
+#     # LinkedList.delete(key):
+#     # bucket_list = bucket(key)
+#     # node = bucket_list.head
+#     # until node = bucket_list.tail
+#     #   if node.key == key
+#     #     node.prev.next = node.next if node.prev
+#     #     node.next.prev = node.prev if node.next
+#     #     node.prev = nil
+#     #     node.next = nil
+#     #     return node
+#     #   end
+#     #   node = node.next
+#     # end
+#     # return nil
+#   end
+#
+#   def resize!
+#     old_store = @store
+#     @store = Array.new(num_buckets * 2) { LinkedList.new }
+#
+#     old_store.each do |bucket_list|
+#       bucket_list.each do |node|
+#         set(node.key, node.val)
+#       end
+#     end
+#   end
+#
+#   alias_method :[], :get
+#   alias_method :[]=, :set
+# end
 
 def HashMap
   def initialize(num_buckets = 8)
