@@ -16,7 +16,7 @@ class LinkedList
   def push(node)
     current_node = head
 
-    until current_node.nxt == node
+    until current_node.nxt.nil?
       current_node = current_node.nxt
     end
 
