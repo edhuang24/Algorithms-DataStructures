@@ -48,6 +48,7 @@ def tarjan_topological_sort(vertices)
   return $sorted
 end
 
+# TODO: try to speed this up by using a hash for a stack instead of an array
 def visit(vertex, stack)
   if stack.include?(vertex)
     return "cycle"
