@@ -1,12 +1,13 @@
 require 'byebug'
 
 class Vertex
-  attr_accessor :value, :in_edges, :out_edges
+  attr_accessor :value, :in_edges, :out_edges, :index
 
   def initialize(value)
     @value = value
     @in_edges = []
     @out_edges = []
+    @index = nil
   end
 end
 
