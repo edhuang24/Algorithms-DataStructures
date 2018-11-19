@@ -24,21 +24,34 @@ def topological_sort(vertices)
     end
   end
 
-  return sorted.map{|x| x.value}
+  return sorted
 end
 
 def tarjan_topological_sort(vertices)
-  sorted = []
+  $sorted = []
+  $visited = []
   stack = []
 
   vertices.each do |vertex|
     stack.push(vertex) if vertex.in_edges.empty?
   end
 
-  until stack.empty?
-    current = stack.pop
-    sorted.push(current)
+  dfs(stack[0])
+  return $sorted.map{|x| x.value}
+end
+
+def dfs(vertex)
+  if $visited.include?(vertex)
+    return
   end
+  $visited.push(vertex)
+  out_edges = vertex.out_edges
+  vertex.out_edges.each do |edge|
+    dfs(edge.to_vertex)
+  end
+
+  $sorted.unshift(vertex)
+  return vertex
 end
 
 vertices = []
