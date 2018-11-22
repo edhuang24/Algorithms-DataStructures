@@ -9,7 +9,7 @@ class Vertex(object):
     def __str__(self):
         return '{} neighbors: {}'.format(
             self.key,
-            [x.key for x in self.neighors]
+            [x.key for x in self.neighbors]
         )
 
     def get_connections(self):
