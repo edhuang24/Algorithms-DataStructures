@@ -1,5 +1,6 @@
 require 'rspec'
 require 'topological_sort'
+require 'byebug'
 
 describe 'TopologicalSort' do
   let(:v1) { Vertex.new("Wash Markov") }

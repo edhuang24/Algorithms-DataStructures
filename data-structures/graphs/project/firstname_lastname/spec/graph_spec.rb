@@ -1,5 +1,6 @@
 require 'rspec'
 require 'graph'
+require 'byebug'
 
 describe Vertex do
   describe '#initialize' do
