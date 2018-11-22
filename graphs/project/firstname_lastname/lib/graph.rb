@@ -7,7 +7,6 @@ class Vertex
     @value = value
     @in_edges = []
     @out_edges = []
-    @index = nil
   end
 end
 
