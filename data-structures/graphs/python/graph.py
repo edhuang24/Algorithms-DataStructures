@@ -58,5 +58,5 @@ for key, vertex in g.vertices.iteritems():
 
 json_graph2 = {outer_k: {inner_k.key: inner_v for inner_k, inner_v in outer_v.neighbors.iteritems()} for outer_k, outer_v in g.vertices.iteritems()}
 
-print json_graph
-print json_graph2
+print(json_graph)
+print(json_graph2)
