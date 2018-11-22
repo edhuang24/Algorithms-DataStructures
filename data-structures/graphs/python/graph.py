@@ -49,11 +49,14 @@ for v in g:
         print(str(w))
 
 json_graph = {}
-for key in g.vertices:
-    for vertex in g.vertices[key].neighbors:
+for key, vertex in g.vertices.iteritems():
+    for neighbor, weight in vertex.neighbors.iteritems():
         # pdb.set_trace()
         if json_graph.get(key) is None:
             json_graph[key] = {}
-        json_graph[key][vertex.key] = g.vertices[key].get_weight(vertex)
+        json_graph[key][neighbor.key] = weight
+
+json_graph2 = {outer_k: {inner_k.key: inner_v for inner_k, inner_v in outer_v.neighbors.iteritems()} for outer_k, outer_v in g.vertices.iteritems()}
 
 print json_graph
+print json_graph2
