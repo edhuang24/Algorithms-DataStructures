@@ -47,3 +47,13 @@ g.add_edge(5, 2, 1)
 for v in g:
     for w in v.get_connections():
         print(str(w))
+
+json_graph = {}
+for key in g.vertices:
+    for vertex in g.vertices[key].neighbors:
+        # pdb.set_trace()
+        if json_graph.get(key) is None:
+            json_graph[key] = {}
+        json_graph[key][vertex.key] = g.vertices[key].get_weight(vertex)
+
+print json_graph
